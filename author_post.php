@@ -13,17 +13,11 @@
             <div class="col-md-8">
 
                 <?php 
-                if(isset($_GET['p_id'])) {
+                if(isset($_GET['author'])) {
                     $the_post_id = $_GET['p_id'];
-
-                    $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE post_id = $the_post_id ";
-                    $send_query = mysqli_query($connection, $view_query);
-
-                    if(!$send_query) {
-                        die("Query Failed " . mysqli_error($connection));
-                    }
-                
-                    $query = "SELECT * from posts WHERE post_id = $the_post_id ";
+                    $the_post_author = $_GET['author'];
+                }
+                    $query = "SELECT * from posts WHERE post_author = '{$the_post_author}' ";
                     $select_all_posts_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
@@ -53,10 +47,7 @@
                 <p><?php echo $post_content; ?></p>
 
                 <hr>
-            <?php } 
-            } else {
-                header("Location: index.php");
-            } ?>
+            <?php } ?>
 
             <div class="well">
                 <h4>Leave a Comment:</h4>

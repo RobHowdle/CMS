@@ -16,7 +16,7 @@
 
 
 
-                    $query = "SELECT * from posts WHERE post_status = 'Published' ORDER BY post_date DESC ";
+                    $query = "SELECT * from posts WHERE post_status = 'Published' ORDER BY post_date DESC LIMIT 3";
                     $select_all_posts_query = mysqli_query($connection, $query);
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
@@ -43,7 +43,7 @@
                     <a href="post.php?p_id=<?php echo $post_id ;?>"><?php echo $post_title; ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
+                    by <a href="author_post.php?author=<?php echo $post_author;?>&p_id=<?php echo $post_id;?>"><?php echo $post_author; ?></a>
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
                 <hr>
