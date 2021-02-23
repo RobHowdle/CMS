@@ -1,7 +1,7 @@
 <?php
     if(isset($_POST['create_post'])) {
             $post_title = $_POST['title'];
-            $post_author = $_POST['post_author'];
+            $post_user = $_POST['post_user'];
             $post_category_id = $_POST['post_category_id'];
             $post_status = $_POST['post_status'];
 
@@ -15,10 +15,10 @@
 
             move_uploaded_file($post_image_temp, "../images/$post_image");
 
-            $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date,
+            $query = "INSERT INTO posts (post_category_id, post_title, post_user, post_date,
                         post_image, post_content, post_tags, post_status) 
                         
-                    VALUES({$post_category_id}, '{$post_title}', '{$post_author}', now() ,
+                    VALUES({$post_category_id}, '{$post_title}', '{$post_user}', now() ,
                         '{$post_image}', '{$post_content}', '{$post_tags}', '{$post_status}' ) ";
                      
             $create_post_query = mysqli_query($connection, $query);
@@ -66,17 +66,47 @@
         </select>
     </div>
 
-    <div class="form-group">
+    <!-- <div class="form-group">
         <label for="post_author">Post Author</label>
         <input type="text" class="form-control" name="post_author">
+    </div> -->
+
+    <div class="form-group">
+        <label for="categories">Users</label>
+        <select class="form-control" name="post_user" id="users">
+            <?php
+                $query = "SELECT * FROM users";
+                $select_users = mysqli_query($connection, $query);
+                
+                confirmQuery($select_users);
+
+                while($row = mysqli_fetch_assoc($select_users)) {
+                    $user_id = $row['user_id'];
+                    $user_username = $row['user_username'];
+
+                    if($user_id == $users) {
+
+      
+                        echo "<option selected value='{$user_username}'>{$user_username}</option>";
+                
+                
+                        } else {
+                
+                          echo "<option value='{$user_username}'>{$user_username}</option>";
+                
+                
+                        }                
+                }
+            ?>
+        </select>
     </div>
 
     <div class="form-group">
         <label for="post_status">Post Status</label>
         <select class="form-control" name="post_status" id="">
-                <option class="form-control" value="draft">Select Options</option>
-                <option class="form-control" value="published">Published</option>
-                <option class="form-control" value="draft">Draft</option>
+            <option class="form-control" value="draft">Select Options</option>
+            <option class="form-control" value="published">Published</option>
+            <option class="form-control" value="draft">Draft</option>
         </select>
     </div>
 

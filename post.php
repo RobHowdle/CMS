@@ -4,15 +4,12 @@
     include "includes/navigation.php";
 ?>
 
-    <!-- Page Content -->
-    <div class="container">
-
-        <div class="row">
-
-            <!-- Blog Entries Column -->
-            <div class="col-md-8">
-
-                <?php 
+<!-- Page Content -->
+<div class="container">
+    <div class="row">
+        <!-- Blog Entries Column -->
+        <div class="col-md-8">
+            <?php 
                 if(isset($_GET['p_id'])) {
                     $the_post_id = $_GET['p_id'];
 
@@ -22,9 +19,18 @@
                     if(!$send_query) {
                         die("Query Failed " . mysqli_error($connection));
                     }
+
+                    if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {                        
+                        $query = "SELECT * FROM posts WHERE post_id = $the_post_id ";
+                    } else {
+                        $query = "SELECT * from posts WHERE post_id = $the_post_id AND post_status = 'published' ";
+                    }
                 
-                    $query = "SELECT * from posts WHERE post_id = $the_post_id ";
                     $select_all_posts_query = mysqli_query($connection, $query);
+
+                    if(mysqli_num_rows($select_all_posts_query) < 1) {
+                        echo "<h1 class='alert alert-danger text-center'>No Posts Available</h1>";
+                } else {
 
                     while($row = mysqli_fetch_assoc($select_all_posts_query)){
                         $post_title = $row['post_title'];
@@ -34,33 +40,31 @@
                         $post_content = $row['post_content'];
                 ?>
 
-                <h1 class="page-header">
-                    Page Heading
-                    <small>Secondary Text</small>
-                </h1>
+            <h1 class="page-header">
+                Posts
+            </h1>
 
-                <!-- First Blog Post -->
-                <h2>
-                    <a href="#"><?php echo $post_title; ?></a>
-                </h2>
-                <p class="lead">
-                    by <a href="index.php"><?php echo $post_author; ?></a>
-                </p>
-                <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
-                <hr>
-                <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
-                <hr>
-                <p><?php echo $post_content; ?></p>
+            <!-- First Blog Post -->
+            <h2>
+                <a href="#"><?php echo $post_title; ?></a>
+            </h2>
+            <p class="lead">
+                by <a href="index.php"><?php echo $post_author; ?></a>
+            </p>
+            <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $post_date; ?></p>
+            <hr>
+            <img class="img-responsive" src="images/<?php echo $post_image; ?>" alt="">
+            <hr>
+            <p><?php echo $post_content; ?></p>
 
-                <hr>
+            <hr>
             <?php } 
-            } else {
-                header("Location: index.php");
-            } ?>
+
+            ?>
 
             <div class="well">
                 <h4>Leave a Comment:</h4>
-                <form role="form" action="" method="post" >
+                <form role="form" action="" method="post">
                     <div class="form-group">
                         <label for="comment_author">Author</label>
                         <input type="text" class="form-control" name="comment_author">
@@ -103,12 +107,12 @@
                     <?php echo $comment_content; ?>
                 </div>
             </div>
+
             <?php
+                 } } }  else {
+                 header("Location: index.php");
                  }
             ?>
-
-
-
             <?php
                 if(isset($_POST['create_comment'])) {
 
@@ -125,34 +129,30 @@
                         if(!$create_comment_query) {
                             die('Failed'. mysqli_error($connection));
                         }
-    
-                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        $query .= "WHERE post_id = $the_post_id ";
-                        $update_comment_count = mysqli_query($connection, $query);
                     } else {
                         echo "<script>alert('Fields cannot be empty.');</script>";
                     }
                 }
             ?>
 
-            </div>
-
-            <!-- Blog Sidebar Widgets Column -->
-            <div class="col-md-4">
-
-                <!-- Blog Search Well -->
-                <?php include "includes/search_bar.php";?>
-
-                <!-- Blog Categories Well -->
-                <?php include "includes/sidebar.php";?>
-            </div>
-
         </div>
-        <!-- /.row -->
 
-        <hr>
+        <!-- Blog Sidebar Widgets Column -->
+        <div class="col-md-4">
+
+            <!-- Blog Search Well -->
+            <?php include "includes/search_bar.php";?>
+
+            <!-- Blog Categories Well -->
+            <?php include "includes/sidebar.php";?>
+        </div>
+
+    </div>
+    <!-- /.row -->
+
+    <hr>
 
 
-<?php 
+    <?php 
     include "includes/footer.php";
 ?>

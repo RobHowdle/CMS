@@ -14,7 +14,6 @@
             $user_firstname = $row['user_firstname'];
             $user_lastname = $row['user_lastname'];
             $user_email = $row['user_email'];
-            $user_role = $row['user_role'];
         }
     }
 ?>
@@ -23,7 +22,6 @@
     if(isset($_POST['update_profile'])) {
         $users_firstname = $_POST['user_firstname'];
         $users_lastname = $_POST['user_lastname'];
-        $user_role = $_POST['user_role'];
         $users_username = $_POST['user_username'];
         $users_email = $_POST['user_email'];
         $users_password = $_POST['user_password'];
@@ -31,7 +29,6 @@
         $query = "UPDATE users SET ";
         $query .= "user_firstname = '{$users_firstname}', ";
         $query .= "user_lastname = '{$users_lastname}', ";
-        $query .= "user_role = '{$user_role}', ";
         $query .= "user_username = '{$users_username}', ";
         $query .= "user_email = '{$users_email}', ";
         $query .= "user_password = '{$users_password}' ";
@@ -39,14 +36,11 @@
         
         $update_profile_query = mysqli_query($connection, $query);
         confirmQuery($update_profile_query);            
-
-
 }
 ?>
+
 <div id="wrapper">
-
 <?php include "includes/admin-navigation.php";?>
-
 
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -75,24 +69,6 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="user_role">Roles</label>
-                            <select class="form-control" name="user_role" id="">
-                                <option value="subscriber"><?php echo $user_role; ?></option>
-                                <?php 
-
-                                if($user_role == 'admin'){
-                                    echo "<option value='subscriber'>Subscriber</option>";
-                                } else {
-                                    echo "<option value='admin'>Admin</option>";
-                                }
-                            
-                                ?>
-                                <option value="admin">Admin</option>
-                                <option value="subscriber">Subscriber</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
                             <label for="post_tags">Username</label>
                             <input type="text" class="form-control" value="<?php echo $user_username; ?>" name="user_username">
                         </div>
@@ -104,7 +80,7 @@
 
                         <div class="form-group">
                             <label for="post_content">Password</label>
-                            <input type="password" class="form-control" value="<?php echo $user_password; ?>" name="user_password">
+                            <input type="password" class="form-control" value="" name="user_password">
                         </div>
 
                         <div class="form-group">

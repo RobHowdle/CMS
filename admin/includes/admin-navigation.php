@@ -13,17 +13,18 @@
 
         <!-- Top Menu Items -->
         <ul class="nav navbar-right top-nav">
+            <li><a href="">Users Online: <span class="usersonline"></span></a>
             <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> 
-                <?php
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i>
+                    <?php
                   if(isset($_SESSION['username'])) {
                       echo $_SESSION['username'];
                   }  
                 ?>
-                <b class="caret"></b></a>
+                    <b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li>
-                        <a href="#"><i class="fa fa-fw fa-user"></i> Profile</a>
+                        <a href="profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
                     </li>
                     <li class="divider"></li>
                     <li>
@@ -41,7 +42,7 @@
                 </li>
                 <li>
                     <a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown">
-                    <i class="fa fa-fw fa-arrows-v"></i> Posts 
+                        <i class="fa fa-fw fa-arrows-v"></i> Posts
                         <i class="fa fa-fw fa-caret-down"></i>
                     </a>
                     <ul id="posts_dropdown" class="collapse">
@@ -57,7 +58,8 @@
                     <a href="categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a>
                 </li>
                 <li>
-                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
+                    <a href="javascript:;" data-toggle="collapse" data-target="#demo"><i
+                            class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
                     <ul id="demo" class="collapse">
                         <li>
                             <a href="users.php">View All Users</a>
@@ -67,7 +69,7 @@
                         </li>
                     </ul>
                 </li>
-                <li class="active">
+                <li>
                     <a href="comments.php"><i class="fa fa-fw fa-file"></i> Comments</a>
                 </li>
                 <li>

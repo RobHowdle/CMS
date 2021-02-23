@@ -6,6 +6,7 @@
             $users_username = $_POST['user_username'];
             $users_email = $_POST['user_email'];
             $users_password = $_POST['user_password'];
+            $password = password_hash($users_password, PASSWORD_BCRYPT, array('cost' => 12));
 
             
 
@@ -13,7 +14,7 @@
             user_username, user_email, user_password) ";
                         
             $query .= "VALUES('{$users_firstname}', '{$users_lastname}', '{$user_role}' ,
-                   '{$users_username}', '{$users_email}', '{$users_password}') ";
+                   '{$users_username}', '{$users_email}', '{$password}') ";
                      
             $create_user_query = mysqli_query($connection, $query);
             

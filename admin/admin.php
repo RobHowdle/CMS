@@ -3,7 +3,7 @@
 <div id="wrapper">
 <?php include "includes/admin-navigation.php";?>
     <div id="page-wrapper">
-
+    <?php users_online(); ?>
         <div class="container-fluid">
 
             <!-- Page Heading -->

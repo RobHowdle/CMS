@@ -8,7 +8,7 @@
 
     while($row = mysqli_fetch_assoc($select_posts_by_id)) {
         $post_id            = $row['post_id'];
-        $post_author        = $row['post_author'];
+        $post_user        = $row['post_user'];
         $post_title         = $row['post_title'];
         $post_category_id   = $row['post_category_id'];
         $post_status        = $row['post_status'];
@@ -21,7 +21,7 @@
 
     if(isset($_POST['update_post'])) {
 
-         $post_author       = $_POST['post_author'];
+         $post_user       = $_POST['post_user'];
          $post_title        = $_POST['post_title'];
          $post_category_id  = $_POST['post_category_id'];
          $post_status       = $_POST['post_status'];
@@ -46,7 +46,7 @@
          $query .= "post_title = '{$post_title}', ";
          $query .= "post_category_id = '{$post_category_id}', ";
          $query .= "post_date = now(), ";
-         $query .= "post_author = '{$post_author}', ";
+         $query .= "post_user = '{$post_user}', ";
          $query .= "post_status = '{$post_status}', ";
          $query .= "post_tags = '{$post_tags}', ";
          $query .= "post_content = '{$post_content}', ";
@@ -97,14 +97,34 @@
         </select>
     </div>
 
-    <!-- <div class="form-group">
-        <label for="post_category_id">Post Category Id</label>
-        <input value="<?php echo $post_id; ?>" type="text" class="form-control" name="post_category_id">
-    </div> -->
-
     <div class="form-group">
-        <label for="post_author">Post Author</label>
-        <input value="<?php echo $post_author; ?>" type="text" class="form-control" name="post_author">
+        <label for="categories">Users</label>
+        <select class="form-control" name="post_user" id="users">
+            <?php
+                $query = "SELECT * FROM users";
+                $select_users = mysqli_query($connection, $query);
+                
+                confirmQuery($select_users);
+
+                while($row = mysqli_fetch_assoc($select_users)) {
+                    $user_id = $row['user_id'];
+                    $user_username = $row['user_username'];
+
+                    if($user_id == $users) {
+
+      
+                        echo "<option selected value='{$user_username}'>{$user_username}</option>";
+                
+                
+                        } else {
+                
+                          echo "<option value='{$user_username}'>{$user_username}</option>";
+                
+                
+                        }                
+                }
+            ?>
+        </select>
     </div>
 
     <div class="form-group">
@@ -124,7 +144,7 @@
     <div class="form-group">
         <label for="post_image">Post Image</label>
         <img width=200 src="../images/<?php echo $post_image; ?>">
-        <input  type="file" name="image">
+        <input type="file" name="image">
     </div>
 
     <div class="form-group">
